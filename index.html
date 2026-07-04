@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio de Mariem Brahim — Étudiante MIAGE, passionnée par la cybersécurité, les architectures distribuées et l'IA à impact social." />
+  <title>Mariem Brahim — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --bg:           #F2EFE7;
+      --bg-card:      #FBF9F3;
+      --bg-dark:      #131517;
+      --ink:          #131517;
+      --ink-soft:     #5A5F65;
+      --ink-faint:    #8B8F94;
+      --rule:         #D6D1C5;
+      --rule-soft:    #E5E1D6;
+      --accent:       #9B2D5E;
+      --accent-deep:  #6D1E40;
+      --accent-soft:  #F4D9E4;
+      --ochre:        #B8893A;
+      --paper:        #FFFFFF;
+
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+      --max:          1200px;
+      --gutter:       clamp(1.25rem, 4vw, 3rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 16px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ::selection { background: var(--accent); color: #fff; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
+    section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: baseline;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-sub {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      grid-column: 2;
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(242, 239, 231, 0.78);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .nav.scrolled { border-bottom-color: var(--rule); }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1rem var(--gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-mark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; letter-spacing: -0.01em; }
+    .nav-mark span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a::before { content: attr(data-num) " "; color: var(--accent); opacity: 0.6; }
+    .nav-toggle { display: none; }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        flex-direction: column;
+        background: var(--bg-card);
+        padding: 1.5rem var(--gutter);
+        border-top: 1px solid var(--rule);
+      }
+      .nav-toggle {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--rule);
+        border-radius: 2px;
+      }
+    }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 6rem; position: relative; }
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .hero-meta::before { content: ""; width: 2rem; height: 1px; background: var(--ink); }
+    .hero-name {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(3rem, 10vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name .surname { font-style: italic; font-weight: 400; display: block; color: var(--accent); }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      font-weight: 300;
+      line-height: 1.4;
+      max-width: 42ch;
+      color: var(--ink-soft);
+      margin-bottom: 3rem;
+    }
+    .hero-tagline strong { font-weight: 500; font-style: italic; color: var(--ink); }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; }
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      color: var(--ink-soft);
+      background: var(--bg-card);
+    }
+    .badge.accent { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    .hero-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.05em;
+    }
+    .hero-foot a:hover { color: var(--accent); }
+    .scroll-cue { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .scroll-cue::after { content: "↓"; animation: bob 2.4s ease-in-out infinite; }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+    .hero-cipher {
+      position: absolute;
+      top: 50%;
+      right: var(--gutter);
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      opacity: 0.35;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.3em;
+      pointer-events: none;
+      display: none;
+    }
+    @media (min-width: 1024px) { .hero-cipher { display: block; } }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+    @media (max-width: 820px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-portrait {
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg-card) 100%);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+    .about-portrait::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg, transparent 0, transparent 14px,
+          rgba(155, 45, 94, 0.06) 14px, rgba(155, 45, 94, 0.06) 15px
+        );
+    }
+    .about-portrait-cap {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+      position: relative;
+    }
+    .about-portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      max-width: 58ch;
+    }
+    .about-text p:last-of-type { color: var(--ink-soft); }
+    .about-text strong { font-weight: 600; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 400;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-top: 0.5rem;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      padding: 1.5rem 1.5rem 1.75rem;
+      border-radius: 4px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .skill-cat { font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; }
+    .skill-icon { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.05em; }
+    .skill-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-list li {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.6rem;
+      background: var(--bg);
+      border: 1px solid var(--rule-soft);
+      border-radius: 3px;
+      color: var(--ink-soft);
+    }
+
+    /* PROJECTS */
+    .featured {
+      background: var(--bg-dark);
+      color: #EEE9DC;
+      border-radius: 6px;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured::before {
+      content: "★ LAURÉATE";
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--ochre);
+      border: 1px solid var(--ochre);
+      padding: 0.35rem 0.7rem;
+      border-radius: 100px;
+    }
+    .featured.pfe { background: var(--bg-card); color: var(--ink); border: 1px solid var(--rule); }
+    .featured.pfe::before { content: "◆ PFE · 2026"; color: var(--accent); border-color: var(--accent); }
+    .featured.pfe .featured-eyebrow { color: var(--accent); }
+    .featured.pfe .featured-title em { color: var(--accent); }
+    .featured.pfe .featured-desc { color: var(--ink-soft); }
+    .featured.pfe .featured-meta { border-top-color: var(--rule); color: var(--ink-faint); }
+    .featured.pfe .featured-meta span strong { color: var(--ink); }
+    .pfe-features {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.75rem;
+    }
+    .pfe-features span {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      padding: 0.3rem 0.65rem; border: 1px solid var(--rule);
+      border-radius: 100px; color: var(--ink-soft); background: var(--bg);
+    }
+    .featured-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 1rem;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+    .featured-title em { font-style: italic; color: var(--ochre); }
+    .featured-desc {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(238, 233, 220, 0.78);
+      max-width: 62ch;
+      margin-bottom: 2rem;
+    }
+    .featured-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(238, 233, 220, 0.18);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: rgba(238, 233, 220, 0.6);
+    }
+    .featured-meta span strong { color: #EEE9DC; font-weight: 500; margin-left: 0.5rem; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .project {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+    }
+    .project:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .project-desc {
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+    .project-highlight {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-deep);
+      background: var(--accent-soft);
+      padding: 0.4rem 0.6rem;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+    }
+    .project-tags span {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.55rem;
+      background: var(--bg);
+      color: var(--ink-soft);
+      border-radius: 3px;
+    }
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      align-self: flex-start;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule-soft);
+      width: 100%;
+      transition: gap 0.2s;
+    }
+    .project-link:hover { gap: 0.7rem; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0.5rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: var(--rule);
+    }
+    .tl-item { position: relative; padding-bottom: 2.5rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -1.6rem;
+      top: 0.5rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .tl-date {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .tl-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.35rem;
+    }
+    .tl-org { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0.75rem; }
+    .tl-org em { font-style: italic; }
+    .tl-desc { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); max-width: 60ch; }
+
+    /* CERT */
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 640px) { .cert-card { grid-template-columns: 1fr; text-align: left; } }
+    .cert-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .cert-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; margin-bottom: 0.25rem; }
+    .cert-platform {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.05em;
+    }
+    .cert-platform .dot { color: var(--accent); margin: 0 0.4rem; }
+    .cert-status {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      color: var(--ink-soft);
+    }
+
+    /* CONTACT */
+    .contact { background: var(--bg-dark); color: #EEE9DC; }
+    .contact .section-head { border-color: rgba(238, 233, 220, 0.18); }
+    .contact .section-title { color: #EEE9DC; }
+    .contact .section-title em { color: var(--accent-soft); }
+    .contact .section-num { color: var(--accent-soft); }
+    .contact .section-sub { color: rgba(238, 233, 220, 0.5); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-lead {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+      font-weight: 300;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #EEE9DC;
+    }
+    .contact-lead em { font-style: italic; color: var(--accent-soft); }
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(238, 233, 220, 0.12);
+    }
+    .contact-list li {
+      background: var(--bg-dark);
+      padding: 1.25rem 0;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      transition: padding 0.2s;
+    }
+    .contact-list li:hover { padding-inline: 0.5rem; }
+    .contact-list .ck {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+    }
+    .contact-list .cv { font-size: 0.95rem; color: #EEE9DC; word-break: break-all; }
+    .contact-list .ca {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: rgba(238, 233, 220, 0.4);
+      transition: color 0.2s;
+    }
+    .contact-list li:hover .ca { color: var(--accent-soft); }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg-dark);
+      color: rgba(238, 233, 220, 0.5);
+      padding: 2rem 0;
+      border-top: 1px solid rgba(238, 233, 220, 0.12);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer a:hover { color: var(--accent-soft); }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* DECRYPT */
+    .decrypt { display: inline-block; }
+    .decrypt .char { display: inline-block; transition: color 0.3s; }
+    .decrypt .char.scrambled { color: var(--accent); opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="nav-mark">Mariem<span>.</span>B</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">Menu</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" data-num="01">À propos</a></li>
+        <li><a href="#skills" data-num="02">Compétences</a></li>
+        <li><a href="#projects" data-num="03">Projets</a></li>
+        <li><a href="#experience" data-num="04">Parcours</a></li>
+        <li><a href="#contact" data-num="05">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero wrap" id="top">
+    <div class="hero-meta">
+      <span>Portfolio</span>
+      <span>·</span>
+      <span>Nouakchott, MR</span>
+      <span>·</span>
+      <span>2026</span>
+    </div>
+
+    <h1 class="hero-name">
+      <span class="decrypt" data-text="Mariem">Mariem</span>
+      <span class="surname decrypt" data-text="Brahim">Brahim</span>
+    </h1>
+
+    <p class="hero-tagline">
+      Étudiante en <strong>MIAGE</strong>, je conçois des systèmes
+      à l'intersection de la <strong>cybersécurité</strong>, des
+      <strong>architectures distribuées</strong> et de l'<strong>IA à
+      impact social</strong>.
+    </p>
+
+    <div class="hero-badges">
+      <span class="badge accent">★ Lauréate · Nouakchott AI Build 2026</span>
+      <span class="badge">3ᵉ année MIAGE</span>
+      <span class="badge">Université de Nouakchott</span>
+      <span class="badge">Disponible pour stage</span>
+    </div>
+
+    <div class="hero-foot">
+      <a href="#about" class="scroll-cue">Découvrir</a>
+      <span>§ Tout commence par une question bien posée.</span>
+    </div>
+
+    <div class="hero-cipher">SECURE · BUILD · LEARN · REPEAT</div>
+  </section>
+
+  <!-- ABOUT · §01 -->
+  <section id="about" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">§ 01</span>
+      <h2 class="section-title">À <em>propos</em></h2>
+      <span class="section-sub">Qui je suis</span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-portrait reveal">
+        <img src="me.png" alt="Mariem Brahim — portrait professionnel" />
+        <span class="about-portrait-cap">MB · 2026</span>
+      </div>
+
+      <div class="about-text reveal">
+        <p>
+          Je suis étudiante en troisième année <strong>MIAGE</strong> à
+          l'Université de Nouakchott, où je termine actuellement mon
+          Projet de Fin d'Études. Mon parcours m'a menée du tronc commun
+          Maths-Physique-Informatique vers une spécialisation
+          délibérément orientée <strong>sécurité informatique</strong>,
+          <strong>architectures distribuées</strong> et
+          <strong>développement full-stack</strong>.
+        </p>
+        <p>
+          En 2026, j'ai été <strong>lauréate du Nouakchott AI Build</strong>
+          dans la catégorie <em>AI for Children</em> avec le projet
+          <strong>MotherEye</strong>. Cette expérience a confirmé ce que
+          je cherche dans la technologie&nbsp;: construire des systèmes
+          fiables, utiles, et porteurs d'un impact réel.
+        </p>
+        <p>
+          Je crois qu'un bon ingénieur ne se contente pas d'écrire du
+          code qui fonctionne — il comprend pourquoi il le fait, pour qui,
+          et à quel prix. Cette rigueur, je l'applique aussi bien à une
+          simulation cryptographique complète qu'à un benchmark
+          d'algorithmes de tri.
+        </p>
+
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">3+</div>
+            <div class="stat-label">années de formation</div>
+          </div>
+          <div>
+            <div class="stat-num">8</div>
+            <div class="stat-label">projets réalisés</div>
+          </div>
+          <div>
+            <div class="stat-num">01</div>
+            <div class="stat-label">prix national</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS · §02 -->
+  <section id="skills" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">§ 02</span>
+      <h2 class="section-title">Compétences <em>techniques</em></h2>
+      <span class="section-sub">Boîte à outils</span>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Langages</h3>
+          <span class="skill-icon">/ lang</span>
+        </div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>Java</li>
+          <li>TypeScript</li>
+          <li>JavaScript</li>
+          <li>C</li>
+          <li>PHP</li>
+          <li>HTML / CSS</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Frameworks &amp; Libs</h3>
+          <span class="skill-icon">/ frame</span>
+        </div>
+        <ul class="skill-list">
+          <li>Next.js</li>
+          <li>Spring Boot</li>
+          <li>Flask</li>
+          <li>Prisma ORM</li>
+          <li>TailwindCSS</li>
+          <li>Numpy · Pandas</li>
+          <li>Matplotlib</li>
+          <li>Cryptography</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Sécurité &amp; Crypto</h3>
+          <span class="skill-icon">/ sec</span>
+        </div>
+        <ul class="skill-list">
+          <li>RSA</li>
+          <li>3DES</li>
+          <li>Chiffrement hybride</li>
+          <li>Architecture client-serveur</li>
+          <li>Authentification par jeton</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Algorithmique</h3>
+          <span class="skill-icon">/ algo</span>
+        </div>
+        <ul class="skill-list">
+          <li>Structures FIFO / LIFO</li>
+          <li>Tri par insertion</li>
+          <li>Tri rapide</li>
+          <li>Analyse de complexité</li>
+          <li>Benchmarks</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Données</h3>
+          <span class="skill-icon">/ data</span>
+        </div>
+        <ul class="skill-list">
+          <li>MySQL</li>
+          <li>SQLite</li>
+          <li>Prisma</li>
+          <li>Modélisation relationnelle</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Systèmes &amp; Réseaux</h3>
+          <span class="skill-icon">/ net</span>
+        </div>
+        <ul class="skill-list">
+          <li>Linux (Kali, Ubuntu)</li>
+          <li>Windows</li>
+          <li>TCP/IP · UDP</li>
+          <li>VLAN</li>
+          <li>Routage statique &amp; dynamique</li>
+          <li>RIP · Subnetting</li>
+          <li>Nginx</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Outils</h3>
+          <span class="skill-icon">/ tools</span>
+        </div>
+        <ul class="skill-list">
+          <li>Git &amp; GitHub</li>
+          <li>WordPress</li>
+          <li>Word · Excel · PowerPoint</li>
+        </ul>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-head">
+          <h3 class="skill-cat">Langues</h3>
+          <span class="skill-icon">/ lang</span>
+        </div>
+        <ul class="skill-list">
+          <li>Arabe — natif</li>
+          <li>Français — avancé</li>
+          <li>Anglais — intermédiaire</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS · §03 -->
+  <section id="projects" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">§ 03</span>
+      <h2 class="section-title">Projets <em>sélectionnés</em></h2>
+      <span class="section-sub">Ce que j'ai construit</span>
+    </div>
+
+    <!-- FEATURED : MotherEye -->
+    <article class="featured reveal">
+      <div class="featured-eyebrow">Projet vedette · Nouakchott AI Build 2026</div>
+      <h3 class="featured-title">Mother<em>Eye</em></h3>
+      <p class="featured-desc">
+        Projet lauréat de la catégorie <em>AI for Children</em> au
+        Nouakchott AI Build 2026. Plateforme de sécurité numérique
+        pour enfants, pensée pour les familles arabes et mauritaniennes&nbsp;:
+        deux applications mobiles (enfant / parent) qui détectent
+        <strong>sur l'appareil même</strong> les contenus explicites,
+        le grooming et le cyberharcèlement — sans qu'aucune capture
+        d'écran ni donnée personnelle ne quitte le téléphone.
+      </p>
+      <div class="featured-meta">
+        <span>STACK <strong>Flutter · Dart · Firebase · IA on-device</strong></span>
+        <span>ANNÉE <strong>2026</strong></span>
+        <span>DISTINCTION <strong>Lauréate AI for Children</strong></span>
+        <span><a href="https://github.com/Mariem-brahim/AI_Build" target="_blank" rel="noopener" style="color:#B8893A;">CODE <strong style="color:#EEE9DC;">Voir sur GitHub →</strong></a></span>
+      </div>
+    </article>
+
+    <!-- FEATURED : PFE -->
+    <article class="featured pfe reveal">
+      <div class="featured-eyebrow">Projet de Fin d'Études · Autorité de Régulation</div>
+      <h3 class="featured-title">Système de gestion &amp; suivi des <em>tickets signalés</em></h3>
+      <p class="featured-desc">
+        Application intranet conçue et développée au sein de
+        l'<strong>Autorité de Régulation</strong> pour centraliser
+        les demandes techniques, améliorer le suivi des incidents
+        et organiser le support technique de l'institution.
+        Quatre espaces selon le rôle — <strong>Administrateur,
+        Directeur, Technicien, Utilisateur</strong> — avec affectation
+        automatique des tickets, tableaux de bord statistiques
+        et génération de rapports PDF.
+      </p>
+      <div class="pfe-features">
+        <span>Authentification OTP</span>
+        <span>Affectation automatique</span>
+        <span>Dashboards &amp; statistiques</span>
+        <span>Rapports PDF</span>
+        <span>HTTPS</span>
+        <span>Protection CSRF</span>
+        <span>Hachage des mots de passe</span>
+      </div>
+      <div class="featured-meta">
+        <span>STACK <strong>Python · Flask · MySQL · JavaScript</strong></span>
+        <span>ANNÉE <strong>2026</strong></span>
+        <span>STATUT <strong>Soutenance en cours — dépôt privé, code disponible sur demande</strong></span>
+      </div>
+    </article>
+
+    <!-- ACADEMIC PROJECTS -->
+    <div class="projects-grid">
+
+      <article class="project reveal">
+        <div class="project-num">— 01 / Fintech</div>
+        <h3 class="project-title">Gestion de comptes bancaires</h3>
+        <div class="project-highlight">◆ Spring Boot · Java 21</div>
+        <p class="project-desc">
+          Application web <strong>Spring Boot</strong> complète&nbsp;:
+          création, modification et suppression de comptes avec
+          <strong>pagination et recherche</strong>, opérations de
+          <strong>retraits et virements entre comptes</strong>, et
+          consultation de l'historique des opérations de chaque
+          compte. Persistance <strong>MySQL</strong>, architecture Maven.
+        </p>
+        <div class="project-tags">
+          <span>Java 21</span><span>Spring Boot</span><span>MySQL</span><span>Maven</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim/Compte_Bancaire" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">— 02 / Cybersécurité</div>
+        <h3 class="project-title">Simulation cryptographique client-serveur</h3>
+        <div class="project-highlight">◆ Projet phare · Sécurité offensive</div>
+        <p class="project-desc">
+          Simulation pédagogique complète d'un système de chiffrement
+          à architecture client-serveur, illustrant le
+          <strong>chiffrement hybride</strong> combinant symétrique
+          (<strong>3DES</strong>) et asymétrique (<strong>RSA</strong>).
+          Comprend un serveur de gestion des clés, un module de
+          chiffrement de fichiers, une passerelle d'authentification
+          web (UUID + IP) et un module de restauration. Base SQLite
+          pour la traçabilité.
+        </p>
+        <div class="project-tags">
+          <span>Python</span><span>Flask</span><span>RSA</span><span>3DES</span><span>SQLite</span><span>PyInstaller</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim/Cryptograhy" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">— 03 / Algorithmique</div>
+        <h3 class="project-title">Centre de tri des colis</h3>
+        <div class="project-highlight">◆ Structures &amp; benchmarks</div>
+        <p class="project-desc">
+          Mini-projet sur les structures de données linéaires (<strong>file
+          FIFO</strong>, <strong>pile LIFO</strong>) et la comparaison
+          expérimentale d'algorithmes de tri (insertion vs tri rapide).
+          Deux interfaces livrées&nbsp;: une console interactive et
+          une application web Flask avec API JSON. Benchmarks mesurés
+          sur n ∈ {100, 500, 1000, 2000}.
+        </p>
+        <div class="project-tags">
+          <span>Python 3.10+</span><span>Flask</span><span>REST</span><span>Algorithmes</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim/Algo_devoir" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">— 04 / Web moderne</div>
+        <h3 class="project-title">Application web full-stack</h3>
+        <div class="project-highlight">◆ Stack contemporaine</div>
+        <p class="project-desc">
+          Application web développée en <strong>TypeScript</strong>,
+          mettant en œuvre le typage statique, une architecture
+          front-end modulaire et des composants réutilisables,
+          dans le cadre du module de développement web du cursus MIAGE.
+        </p>
+        <div class="project-tags">
+          <span>TypeScript</span><span>Web</span><span>Front-end</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim/projet_web" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">— 05 / Gestion médicale</div>
+        <h3 class="project-title">Gestion de dossiers patients</h3>
+        <div class="project-highlight">◆ Java · MVC</div>
+        <p class="project-desc">
+          Système de gestion des dossiers médicaux développé en
+          <strong>Java</strong>. Enregistrement, consultation et suivi
+          des patients, avec interfaces HTML/CSS et une architecture
+          MVC classique pensée pour l'évolutivité.
+        </p>
+        <div class="project-tags">
+          <span>Java</span><span>HTML</span><span>CSS</span><span>MVC</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim/PatientProjet" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+      <article class="project reveal">
+        <div class="project-num">— 06 / Systèmes</div>
+        <h3 class="project-title">Configuration LEMP</h3>
+        <div class="project-highlight">◆ DevOps &amp; déploiement</div>
+        <p class="project-desc">
+          Mise en place d'une stack <strong>Linux · Nginx · MySQL · PHP</strong>
+          de bout en bout. Configuration serveur, gestion des virtual
+          hosts, sécurisation et déploiement d'une application PHP
+          en environnement de production.
+        </p>
+        <div class="project-tags">
+          <span>Linux</span><span>Nginx</span><span>MySQL</span><span>PHP</span>
+        </div>
+        <a href="https://github.com/Mariem-brahim" target="_blank" rel="noopener" class="project-link">Voir sur GitHub →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE · §04 -->
+  <section id="experience" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">§ 04</span>
+      <h2 class="section-title">Parcours &amp; <em>distinctions</em></h2>
+      <span class="section-sub">Expérience professionnelle</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2026 · Lauréate</div>
+        <h3 class="tl-title">Nouakchott AI Build 2026 — Catégorie <em>AI for Children</em></h3>
+        <p class="tl-org">Hackathon national — Projet <em>MotherEye</em></p>
+        <p class="tl-desc">
+          Sélectionnée puis primée pour la conception et la réalisation
+          d'une solution d'IA dédiée à la protection de l'enfance.
+          Travail en équipe, présentation devant un jury, et validation
+          d'une preuve de concept fonctionnelle dans un temps contraint.
+        </p>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2026 · PFE</div>
+        <h3 class="tl-title">Projet de Fin d'Études — Système de suivi des tickets</h3>
+        <p class="tl-org">Autorité de Régulation — <em>Nouakchott</em></p>
+        <p class="tl-desc">
+          Conception et développement d'une application intranet de
+          gestion, de suivi et de traitement des tickets signalés,
+          en conditions réelles au sein de l'institution&nbsp;: analyse
+          des besoins, conception UML, implémentation Flask/MySQL,
+          tests et sécurisation (OTP, HTTPS, CSRF).
+        </p>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 · 3 mois</div>
+        <h3 class="tl-title">Stagiaire</h3>
+        <p class="tl-org">Autorité de Régulation — <em>Nouakchott</em></p>
+        <p class="tl-desc">
+          Stage de trois mois au sein d'une autorité de régulation
+          nationale. Immersion dans un environnement institutionnel
+          structuré, exposition aux exigences de conformité et aux
+          enjeux de gouvernance technique du secteur.
+        </p>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2023 — 2026</div>
+        <h3 class="tl-title">Formation MIAGE</h3>
+        <p class="tl-org">Université de Nouakchott — <em>Faculté des Sciences et Techniques</em></p>
+        <p class="tl-desc">
+          Cursus en Méthodes Informatiques Appliquées à la Gestion des
+          Entreprises. Tronc commun MPI (2023–2024), puis spécialisation
+          MIAGE avec accent personnel sur la cybersécurité, les réseaux
+          et le génie logiciel.
+        </p>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2023</div>
+        <h3 class="tl-title">Baccalauréat — Série D</h3>
+        <p class="tl-org">Sciences de la nature</p>
+        <p class="tl-desc">
+          Obtention du baccalauréat scientifique, préparant à la
+          poursuite d'études supérieures dans les filières
+          mathématiques, physiques et informatiques.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS · §05 -->
+  <section id="certs" class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">§ 05</span>
+      <h2 class="section-title">Certifications &amp; <em>formation continue</em></h2>
+      <span class="section-sub">Apprendre en dehors des bancs</span>
+    </div>
+
+    <div class="cert-card reveal" style="margin-bottom:1rem;">
+      <div class="cert-icon">IA</div>
+      <div>
+        <div class="cert-title">Bootcamp intensif — « Booster les compétences par l'Intelligence Artificielle »</div>
+        <div class="cert-platform">ICESCO · FST, Université de Nouakchott · CNEQS <span class="dot">·</span> 3–5 février 2026 <span class="dot">·</span> Attestation obtenue</div>
+      </div>
+      <span class="cert-status" style="border-color:var(--accent);color:var(--accent);">Certifiée</span>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">Py</div>
+      <div>
+        <div class="cert-title">Python Programming Fundamentals</div>
+        <div class="cert-platform">Coursera <span class="dot">·</span> 2026</div>
+      </div>
+      <span class="cert-status">En préparation</span>
+    </div>
+
+    <!-- ÉVÉNEMENTS & PARTICIPATIONS -->
+    <div style="margin-top:3rem;">
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:500;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--rule);">
+        Événements &amp; participations
+      </h3>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-head">
+            <h3 class="skill-cat" style="font-size:1.05rem;">Journée Nationale de la Cybersécurité</h3>
+            <span class="skill-icon">/ sec</span>
+          </div>
+          <p style="font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
+            Participation à la journée nationale dédiée à la
+            cybersécurité — sensibilisation aux menaces, bonnes
+            pratiques et enjeux de la sécurité numérique en Mauritanie.
+          </p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-head">
+            <h3 class="skill-cat" style="font-size:1.05rem;">Conférence Internationale sur l'IA</h3>
+            <span class="skill-icon">/ ai</span>
+          </div>
+          <p style="font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
+            Participation à la Conférence Internationale sur
+            l'Intelligence Artificielle et ses applications à l'ère
+            des transformations numériques.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT · §06 -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">§ 06</span>
+        <h2 class="section-title">Travaillons <em>ensemble</em></h2>
+        <span class="section-sub">Restons en contact</span>
+      </div>
+
+      <div class="contact-grid">
+        <p class="contact-lead reveal">
+          Stage, opportunité, ou simplement échange autour
+          d'un projet&nbsp;? <em>Je suis joignable.</em>
+        </p>
+
+        <ul class="contact-list reveal">
+          <li>
+            <span class="ck">Email</span>
+            <a href="mailto:houdabrahum@gmail.com" class="cv">houdabrahum@gmail.com</a>
+            <span class="ca">→</span>
+          </li>
+          <li>
+            <span class="ck">Tél</span>
+            <a href="tel:+22248208792" class="cv">+222 48 20 87 92</a>
+            <span class="ca">→</span>
+          </li>
+          <li>
+            <span class="ck">GitHub</span>
+            <a href="https://github.com/Mariem-brahim" target="_blank" rel="noopener" class="cv">github.com/Mariem-brahim</a>
+            <span class="ca">→</span>
+          </li>
+          <li>
+            <span class="ck">LinkedIn</span>
+            <a href="https://linkedin.com/in/mariem-brahim-mohamdi-vall-9b6245376" target="_blank" rel="noopener" class="cv">Mariem Brahim Mohamdi Vall</a>
+            <span class="ca">→</span>
+          </li>
+          <li>
+            <span class="ck">Lieu</span>
+            <span class="cv">Nouakchott, Mauritanie</span>
+            <span class="ca">·</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span>© 2026 Mariem Brahim — Tous droits réservés.</span>
+      <span>Conçu et codé avec soin · Nouakchott</span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 12);
+    }, { passive: true });
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle?.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => links.classList.remove('open'))
+    );
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Decryption effect on hero name
+    const decryptEls = document.querySelectorAll('.decrypt');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!?$#&%';
+
+    decryptEls.forEach((el, idx) => {
+      const text = el.dataset.text || el.textContent;
+      el.innerHTML = '';
+      [...text].forEach((c) => {
+        const span = document.createElement('span');
+        span.className = 'char scrambled';
+        span.textContent = c === ' ' ? '\u00A0' : chars[Math.floor(Math.random() * chars.length)];
+        el.appendChild(span);
+
+        let iterations = 0;
+        const maxIter = 6 + Math.floor(Math.random() * 4);
+        const interval = setInterval(() => {
+          if (iterations >= maxIter) {
+            span.textContent = c === ' ' ? '\u00A0' : c;
+            span.classList.remove('scrambled');
+            clearInterval(interval);
+            return;
+          }
+          span.textContent = chars[Math.floor(Math.random() * chars.length)];
+          iterations++;
+        }, 55);
+      });
+    });
+  </script>
+
+</body>
+</html>
